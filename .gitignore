@@ -1,0 +1,5 @@
+*.fmt
+*.log
+*.dvi
+*.ps
+test.pdf

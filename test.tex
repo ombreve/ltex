@@ -1,0 +1,73 @@
+% Test du format frplain
+
+\magnification=\magstephalf
+\parindent=0pt
+\centerline{\bf Test du format \fmtname, version \fmtversion}
+\bigskip
+
+\beginsection Entr\'ee avec syntaxe \TeX
+
+D\`es No\"el o\`u un z\'ephyr ha\"\i{} me v\^et de gla\c cons w\"urmiens
+je d\^\i ne d'exquis r\^otis de b\oe uf au kir \`{a} l'a\"y d'\^age
+m\^ur \& c\ae tera !
+
+\smallskip
+?`But aren't Kafka's Schlo{\ss} and {\AE}sop's {\OE}uvres
+often na{\"\i}ve  vis-\`a-vis the d{\ae}monic ph{\oe}nix's official r\^ole
+in fluffy souffl\'es?
+
+\smallskip
+{\AA}ngel\aa\ \'Erica K\=aren {\L}au\.ra Mar{\'\i}a N\H{a}ta{\l}{\u\i}e
+{\O}ctave T\~a{\'\j}a Ur\v{s}ula Yv{\o}nne Z\"azilie
+
+\beginsection Entrée UTF-8
+
+Dès Noël où un zéphyr haï me vêt de glaçons würmiens je dîne d’exquis
+rôtis de bœuf au kir à l’aÿ d’âge mûr \& cætera !
+
+\beginsection Césures françaises
+
+Vérifier dans {\tentt test.log} que l'on a bien une ligne avec
+césures anglaises :
+\smallskip
+{\tentt sig-nal con-tainer}
+\smallskip
+deux lignes avec césures françaises :
+\smallskip
+{\tentt si-gnal contai-ner \char`\^\char`\^e9v\char`\^\char`\^e9-ne-ment
+  al-g\char`\^\char`\^e8bre}
+\smallskip
+une ligne sans césures :
+\smallskip
+{\tentt signal container}
+
+{\english \showhyphens{signal container}}
+\showhyphens{signal container \'ev\'enement alg\`ebre}
+\showhyphens{signal container événement algèbre}
+{\nohyphen \showhyphens{signal container}}
+
+\beginsection Ponctuations doubles
+
+Sans espace avant! avec un espace avant ! avec un espace insécable avant !
+\par
+Sans espace avant? avec un espace avant ? avec un espace insécable avant ?
+\par
+Sans espace avant; avec un espace avant ; avec un espace insécable avant ;
+\par
+Et le deux points : fin.
+
+\beginsection Guillemets
+
+\og Avec les macros dédiées \fg, et avec les caractères guillemets\par
+«sans espace»,\par
+« avec espaces »,\par
+« avec espaces insécables ».
+
+\beginsection Mathématiques
+
+$$ A B C \dots a b c $$
+$$ \le \ge $$
+$$ \N\D\Q\R\C $$
+
+\bye
+

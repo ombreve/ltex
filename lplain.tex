@@ -1,0 +1,404 @@
+% lplain.tex
+% Une adaptation du format plain TeX à la langue française :
+% - jeu de caractères « lmodern » en codage LY1 (texnansi) ;
+% - flux d’entrée utf8 associé à LY1 (via encTeX) ;
+% - césures françaises et anglaises ;
+% - signes de ponctuation double et guillemets ;
+% - majuscules droites en mathématiques ;
+% - impression sur feuilles A4.
+%
+
+%%
+%% Test de encTeX
+%%
+
+% Les catcodes minima pour démarrer.
+\catcode`\{=1 \catcode`\}=2 \catcode`\#=6 \catcode`\^=7
+
+\ifx\xprncode\undefined
+  \message{ fatal error: the '-enc' option is required to process this file.}%
+  \batchmode\end
+\fi
+
+%%
+%% Chargement de plain.tex avec fonts lmodern
+%%
+
+% Les 16 fonts de plain en version lmodern (OT1/OML/OMS)
+\font\tenrm=rm-lmr10
+\font\sevenrm=rm-lmr7
+\font\fiverm=rm-lmr5
+\font\teni=lmmi10
+\font\seveni=lmmi7
+\font\fivei=lmmi5
+\font\tensy=lmsy10
+\font\sevensy=lmsy7
+\font\fivesy=lmsy5
+\font\tenex=lmex10
+\font\tenbf=rm-lmbx10
+\font\sevenbf=rm-lmbx7
+\font\fivebf=rm-lmbx5
+\font\tentt=rm-lmtt10
+\font\tensl=rm-lmro10
+\font\tenit=rm-lmri10
+
+\def\gobbleline{\begingroup \catcode`\%=12 \catcode13=12 \gulp}
+\begingroup
+  \lccode1=13 \lowercase{\gdef\gulp#1^^A{\endgroup}}
+\endgroup
+\let\ofont=\font \let\font=\gobbleline
+\input plain
+\let\font=\ofont \let\ofont=\undefined
+\let\gobbleline=\undefined \let\gulp=\undefined
+
+\catcode`@=11
+
+%%
+%% Fonts lmodern en codage LY1 (texnansi)
+%%
+
+\let\otenrm=\tenrm
+\let\otenbf=\tenbf
+\let\otentt=\tentt
+\let\otensl=\tensl
+\let\otenit=\tenit
+\font\tenrm=texnansi-lmr10
+\font\tenbf=texnansi-lmbx10
+\font\tentt=texnansi-lmtt10
+\font\tensl=texnansi-lmro10
+\font\tenit=texnansi-lmri10
+
+\chardef\aa             = "E5
+\chardef\AA             = "C5
+\chardef\bullet         = "94
+\chardef\cent           = "A2
+\chardef\copyright      = "A9
+\chardef\currency       = "A4
+\chardef\dag            = "86
+\chardef\ddag           = "87
+\chardef\degree         = "B0
+\chardef\dh             = "F0
+\chardef\DH             = "D0
+\def\dots               {\relax \ifmmode\ldots \else ^^85\fi}
+\chardef\euro           = "01
+\chardef\florin         = "83
+\chardef\guillemotleft  = "AB
+\chardef\guillemotright = "BB
+\chardef\guilsinglleft  = "8B
+\chardef\guilsinglright = "9B
+\chardef\l              = "90
+\chardef\L              = "80
+\chardef\P              = "B6
+\chardef\periodcentered = "B7
+\chardef\perthousand    = "89
+\chardef\pounds         = "A3
+\chardef\quotedblbase   = "84
+\chardef\quotedblleft   = "93
+\chardef\quotedblright  = "94
+\chardef\quotesinglbase = "82
+\chardef\quotesingle    = "81
+\chardef\registered     = "AE
+\chardef\S              = "A7
+\chardef\th             = "FE
+\chardef\TH             = "DE
+\chardef\trademark      = "99
+\chardef\yen            = "A5
+
+% La série de \if imbriqué n'est pas optimale, mais les caractères
+% accentués sont le plus souvent codés en UTF-8 dans le flux d'entrée.
+
+\def\`#1{%
+  \if#1a^^e0\else
+  \if#1e^^e8\else
+  \if#1i^^ec\else
+  \if#1o^^f2\else
+  \if#1u^^f9\else
+  \if#1A^^c0\else
+  \if#1E^^c8\else
+  \if#1I^^cc\else
+  \if#1O^^d2\else
+  \if#1U^^d9\else
+  \if#1\i^^ec\else
+  {\accent18 #1}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
+
+\def\'#1{%
+  \if#1a^^e1\else
+  \if#1e^^e9\else
+  \if#1i^^ed\else
+  \if#1o^^f3\else
+  \if#1u^^fa\else
+  \if#1y^^fd\else
+  \if#1A^^c1\else
+  \if#1E^^c9\else
+  \if#1I^^cd\else
+  \if#1O^^d3\else
+  \if#1U^^da\else
+  \if#1Y^^dd\else
+  \if#1\i^^ed\else
+  {\accent19 #1}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
+
+\def\^#1{%
+  \if#1a^^e2\else
+  \if#1e^^ea\else
+  \if#1i^^ee\else
+  \if#1o^^f4\else
+  \if#1u^^fb\else
+  \if#1A^^c2\else
+  \if#1E^^ca\else
+  \if#1I^^ce\else
+  \if#1O^^d4\else
+  \if#1U^^db\else
+  \if#1\i^^ee\else
+  {\accent94 #1}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
+
+\def\~#1{%
+  \if#1a^^e3\else
+  \if#1n^^f1\else
+  \if#1o^^f5\else
+  \if#1A^^c3\else
+  \if#1N^^d1\else
+  \if#1O^^d5\else
+  {\accent126 #1}%
+  \fi\fi\fi\fi\fi\fi}
+
+\def\"#1{%
+  \if#1a^^e4\else
+  \if#1e^^eb\else
+  \if#1i^^ef\else
+  \if#1o^^f6\else
+  \if#1u^^fc\else
+  \if#1y^^ff\else
+  \if#1A^^c4\else
+  \if#1E^^cb\else
+  \if#1I^^cf\else
+  \if#1O^^d6\else
+  \if#1U^^dc\else
+  \if#1Y^^9f\else
+  \if#1\i^^ef\else
+  {\accent168 #1}%
+  \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi}
+
+\def\v#1{%
+  \if#1s^^9a\else
+  \if#1z^^9d\else
+  \if#1S^^8a\else
+  \if#1Z^^8d\else
+  {\accent20 #1}%
+  \fi\fi\fi\fi}
+
+\def\r#1{%
+  \if#1a^^e5\else
+  \if#1A^^c5\else
+  {\accent23 #1}%
+  \fi\fi}
+
+\def\c#1{%
+  \if#1c^^e7\else
+  \if#1C^^c7\else
+  {\setbox\z@\hbox{#1}\ifdim\ht\z@=1ex\accent24 #1%
+   \else{\ooalign{\hidewidth\char24\hidewidth\crcr\unhbox\z@}}\fi}%
+  \fi\fi}
+
+\def\H#1{{\accent6 #1}}
+\def\.#1{{\accent5 #1}}
+\def\k#1{\setbox\z@\hbox{#1}\ifdim\ht\z@=1ex\accent7 #1%
+  \else{\ooalign{\hidewidth\char7\hidewidth\crcr\unhbox\z@}}\fi}
+
+% Tables lccode et uccode
+\lccode"19="19 \lccode"DF="DF % \ss
+\def\lowup#1#2{\lccode#1=#1\lccode#2=#1\uccode#2=#2\uccode#1=#2}
+\lowup{"1A}{"1D}\lowup{"1B}{"1E}\lowup{"1C}{"1F}
+\lowup{"90}{"80}\lowup{"9A}{"8A}\lowup{"9C}{"8C}\lowup{"9D}{"8D}
+\lowup{"E0}{"C0}\lowup{"E1}{"C1}\lowup{"E2}{"C2}\lowup{"E3}{"C3}
+\lowup{"E4}{"C4}\lowup{"E5}{"C5}\lowup{"E6}{"C6}\lowup{"E7}{"C7}
+\lowup{"E8}{"C8}\lowup{"E9}{"C9}\lowup{"EA}{"CA}\lowup{"EB}{"CB}
+\lowup{"EC}{"CC}\lowup{"ED}{"CD}\lowup{"EE}{"CE}\lowup{"EF}{"CF}
+\lowup{"F0}{"D0}\lowup{"F1}{"D1}\lowup{"F2}{"D2}\lowup{"F3}{"D3}
+\lowup{"F4}{"D4}\lowup{"F5}{"D5}\lowup{"F6}{"D6}
+\lowup{"F8}{"D8}\lowup{"F9}{"D9}\lowup{"FA}{"DA}\lowup{"FB}{"DB}
+\lowup{"FC}{"DC}\lowup{"FD}{"DD}\lowup{"FE}{"DE}\lowup{"FF}{"9F}
+\let\lowup=\undefined
+
+%%
+%% Flux d'entrée UTF-8
+%%
+
+% Séquences UTF-8 des caractères accentués du français
+% (àâéèêëîïôùûüÿçæœ) associés à une position LY1.
+\mubyte ^^e0 ^^c3^^a0\endmubyte % à
+\mubyte ^^c0 ^^c3^^80\endmubyte % À
+\mubyte ^^e2 ^^c3^^a2\endmubyte % â
+\mubyte ^^c2 ^^c3^^82\endmubyte % Â
+\mubyte ^^e9 ^^c3^^a9\endmubyte % é
+\mubyte ^^c9 ^^c3^^89\endmubyte % É
+\mubyte ^^e8 ^^c3^^a8\endmubyte % è
+\mubyte ^^c8 ^^c3^^88\endmubyte % È
+\mubyte ^^ea ^^c3^^aa\endmubyte % ê
+\mubyte ^^ca ^^c3^^8a\endmubyte % Ê
+\mubyte ^^eb ^^c3^^ab\endmubyte % ë
+\mubyte ^^cb ^^c3^^8b\endmubyte % Ë
+\mubyte ^^ee ^^c3^^ae\endmubyte % î
+\mubyte ^^ce ^^c3^^8e\endmubyte % Î
+\mubyte ^^ef ^^c3^^af\endmubyte % ï
+\mubyte ^^cf ^^c3^^8f\endmubyte % Ï
+\mubyte ^^f4 ^^c3^^b4\endmubyte % ô
+\mubyte ^^d4 ^^c3^^94\endmubyte % Ô
+\mubyte ^^f9 ^^c3^^b9\endmubyte % ù
+\mubyte ^^d9 ^^c3^^99\endmubyte % Ù
+\mubyte ^^fb ^^c3^^bb\endmubyte % û
+\mubyte ^^db ^^c3^^9b\endmubyte % Û
+\mubyte ^^fc ^^c3^^bc\endmubyte % ü
+\mubyte ^^dc ^^c3^^9c\endmubyte % Ü
+\mubyte ^^ff ^^c3^^bf\endmubyte % ÿ
+\mubyte ^^9f ^^c3^^9f\endmubyte % Ÿ
+\mubyte ^^e7 ^^c3^^a7\endmubyte % ç
+\mubyte ^^c7 ^^c3^^87\endmubyte % Ç
+\mubyte ^^e6 ^^c3^^a6\endmubyte % æ
+\mubyte ^^c6 ^^c3^^86\endmubyte % Æ
+\mubyte ^^9c ^^c5^^93\endmubyte % œ
+\mubyte ^^8c ^^c5^^92\endmubyte % Œ
+
+% Quelques séquences supplémentaires utiles.
+\mubyte '     ^^e2^^80^^99\endmubyte     % ’
+\mubyte \dots ^^e2^^80^^a6\endmubyte     % …
+\mubyte ~     ^^c2^^a0\endmubyte         % nbsp
+\mubyte \og   ^^c2^^ab\endmubyte         % «
+\mubyte \fg   ^^c2^^bb\endmubyte         % »
+\mubyte \og   ^^c2^^ab^^c2^^a0\endmubyte % « suivi de nbsp
+\mubyte \fg   ^^c2^^a0^^c2^^bb\endmubyte % » précédé de nbsp
+
+% Active le décodage du flux d'entrée UTF-8 en LY1.
+\mubytein=1
+
+%%
+%% Césures
+%%
+
+% Césures anglaises (déjà chargées par plain).
+\def\english{\language=\z@
+  \lefthyphenmin=2 \righthyphenmin=3 \lccode`\'=\z@}
+
+% Césures françaises (le fichier de motifs est codé en utf8).
+\newlanguage\lang@french
+\begingroup
+  \language=\lang@french \lccode`\'=`\'
+  \input hyph-fr
+\endgroup
+\def\french{\language=\lang@french
+  \lefthyphenmin=2 \righthyphenmin=2 \lccode`\'=`\'}
+
+% Pas de césures
+\newlanguage\lang@nohyphen
+\def\nohyphen{\language=\lang@nohyphen}
+
+%%
+%% Typographie française
+%%
+
+% Ponctuations doubles.
+\def\dblpspace{\hskip.5\fontdimen2\font\relax}
+\catcode`;=\active
+\def;{\ifhmode\ifdim\lastskip>1sp\unskip\penalty\@M\dblpspace\fi\fi\string;}
+\catcode`!=\active
+\def!{\ifhmode\ifdim\lastskip>1sp\unskip\penalty\@M\dblpspace\fi\fi\string!}
+\catcode`?=\active
+\def?{\ifhmode\ifdim\lastskip>1sp\unskip\penalty\@M\dblpspace\fi\fi\string?}
+\def\colonspace{\space}
+\catcode`:=\active
+\def:{\ifhmode\ifdim\lastskip>1sp\unskip\penalty\@M\colonspace\fi\fi\string:}
+
+% Guillemets.
+\def\guillspace{\hskip.8\fontdimen2\font
+  plus .3\fontdimen3\font minus .8\fontdimen4\font\relax}
+\def\og{\leavevmode\guillemotleft\penalty\@M\guillspace\ignorespaces}
+\def\fg{\ifdim\lastskip>\z@\unskip\fi\penalty\@M\guillspace\guillemotright}
+
+% Petites capitales sans césure pour les noms de famille et autres.
+\font\tencsc=texnansi-lmcsc10
+\def\bsc#1{\hbox{\tencsc #1}}
+
+%%
+%% Mathématiques
+%%
+
+% Majuscules droites en mode mathématique.
+\begingroup
+  \count0="41
+  \loop
+    \count1=\count0 \advance\count1 by "7000
+    \global\mathcode\count0=\count1
+  \ifnum\count0 < "5A \advance\count0 by \@ne \repeat
+\endgroup
+
+% Quelques jeux de caractères utiles (AMS symbols et Euler fraktur).
+\font\tenmsa    = msam10
+\font\sevenmsa  = msam7
+\font\fivemsa   = msam5
+\font\tenmsb    = msbm10
+\font\sevenmsb  = msbm7
+\font\fivemsb   = msbm5
+\font\teneufm   = eufm10
+\font\seveneufm = eufm7
+\font\fiveeufm  = eufm5
+\newfam\msafam  % "8
+\newfam\msbfam  % "9
+\newfam\eufmfam % "A
+\textfont\msafam          = \tenmsa
+\scriptfont\msafam        = \sevenmsa
+\scriptscriptfont\msafam  = \fivemsa
+\textfont\msbfam          = \tenmsb
+\scriptfont\msbfam        = \sevenmsb
+\scriptscriptfont\msbfam  = \fivemsb
+\textfont\eufmfam         = \teneufm
+\scriptfont\eufmfam       = \seveneufm
+\scriptscriptfont\eufmfam = \fiveeufm
+
+% Caractères mathématiques utiles.
+\mathchardef\leqslant     = "3836
+\mathchardef\geqslant     = "383E
+\mathchardef\subsetneq    = "3928
+\mathchardef\supsetneq    = "3929
+\mathchardef\N            = "094E
+\mathchardef\Z            = "095A
+\mathchardef\D            = "0944
+\mathchardef\Q            = "0951
+\mathchardef\R            = "0952
+\mathchardef\C            = "0943
+
+\let\le=\leqslant
+\let\ge=\geqslant
+\def\bbb{\fam\msbfam}
+\def\frak{\fam\eufmfam}
+
+%%
+%% Format a4
+%%
+
+% On garde le même \hsize que plain, marges horizontales et verticales
+% identiques, entête *et* pagination dans les marges.
+% \hsize = 6.5in -> marge = (21-16.51)/2 = 2.245cm
+% \vsize = 29.7-2*2.245 = 24.956cm (0.1in=0.254cm pour la pagination)
+\hoffset       = -0.295cm % 1in - marge
+\voffset       = -0.295cm % \hoffset
+\vsize         = 25.21cm  % 29.7cm - 2*marge
+\dimen\footins = 22.67cm  % \vsize - 1in
+
+% Adapte \m@g (plain.tex, \magnification).
+\def\m@g{\mag\count@
+  \hsize         = 6.5 true in
+  \vsize         = 25.21 true cm
+  \dimen\footins = 22.67 true cm
+}
+
+%%
+%% Final
+%%
+
+\rm
+\french \frenchspacing
+\def\fmtname{lplain}
+\edef\fmtversion{0.577 (\fmtversion)}
+\dump
